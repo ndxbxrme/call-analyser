@@ -10,7 +10,7 @@ npm install --save https://github.com/ndxbxrme/call-analyser.git
 analyser = require 'call-analyser'
 
 main = ->
-  output = await analyser.analyse
+  output = await analyser
     filePath: 'wavs/1.wav'
   console.log output
 main()
