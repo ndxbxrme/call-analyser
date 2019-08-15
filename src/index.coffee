@@ -42,4 +42,4 @@ main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileF
 #main 'wavs/1.wav', 0.04, 0.25, 0.5
 module.exports
   analyse: (args) ->
-    await main args.filePath, args.triggerValue or 0.04, args.minLengthSecs or 0.025, args.maxSilenceLengthSecs or 0.5, args.outputFileFolder, args.outputFilePrefix
+    await main args.filePath, args.triggerValue or 0.04, args.minLengthSecs or 0.25, args.maxSilenceLengthSecs or 0.5, args.outputFileFolder, args.outputFilePrefix
