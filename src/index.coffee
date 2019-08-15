@@ -11,13 +11,11 @@ main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileF
   if decoded and decoded.sampleRate
     lastSignificant = -1
     start = -1
-    #await fs.emptyDir 'output'
     for channel, c in decoded.channelData
       for sample, i in decoded.channelData[c]
         if Math.abs(sample) > 0.04
           if i - lastSignificant > decoded.sampleRate * maxSilenceLengthSecs
             if start isnt - 1
-              console.log i - lastSignificant, start, lastSignificant
               length = lastSignificant - start
               if length > decoded.sampleRate * minLengthSecs
                 outbursts.push 
