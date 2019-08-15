@@ -18,7 +18,7 @@ main()
 
 ### with more options
 ```coffeescript
-output = await analyser.analyse
+output = await analyser
   filePath: 'wavs/1.wav'
   triggerValue: 0.04 #number between 0 and 1
   minLengthSecs: 0.25 #minimum length for an item
