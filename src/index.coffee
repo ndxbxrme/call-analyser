@@ -5,7 +5,7 @@ WavDecoder = require 'wav-decoder'
 WavEncoder = require 'wav-encoder'
 
 main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileFolder, outputFilePrefix) ->
-  file = await fs.readFile 'wavs/1.wav'
+  file = await fs.readFile filePath
   decoded = await WavDecoder.decode file
   outbursts = []
   if decoded and decoded.sampleRate

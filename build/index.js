@@ -10,7 +10,7 @@
 
   main = async function(filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileFolder, outputFilePrefix) {
     var buffer, c, channel, decoded, file, i, j, k, l, lastSignificant, len, len1, len2, length, outArr, outburst, outbursts, ref, ref1, sample, start;
-    file = (await fs.readFile('wavs/1.wav'));
+    file = (await fs.readFile(filePath));
     decoded = (await WavDecoder.decode(file));
     outbursts = [];
     if (decoded && decoded.sampleRate) {
