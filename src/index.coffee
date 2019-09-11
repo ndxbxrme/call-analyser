@@ -30,7 +30,7 @@ main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileF
     for outburst, i in outbursts
       outburst.index = i
       if i > 0
-        outburst.fromLast = (outburst.start - outbursts[i - 1].end).toFixed(4)
+        outburst.fromLast = +(outburst.start - outbursts[i - 1].end).toFixed(4)
       if outputFileFolder and outputFilePrefix
         outArr = new Float32Array(outburst.length * decoded.sampleRate).map (e, index) ->
           decoded.channelData[outburst.channel][(outburst.start * decoded.sampleRate) + index]

@@ -52,7 +52,7 @@
         outburst = outbursts[i];
         outburst.index = i;
         if (i > 0) {
-          outburst.fromLast = (outburst.start - outbursts[i - 1].end).toFixed(4);
+          outburst.fromLast = +(outburst.start - outbursts[i - 1].end).toFixed(4);
         }
         if (outputFileFolder && outputFilePrefix) {
           outArr = new Float32Array(outburst.length * decoded.sampleRate).map(function(e, index) {
