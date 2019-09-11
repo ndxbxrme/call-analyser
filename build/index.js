@@ -29,9 +29,9 @@
                 if (length > decoded.sampleRate * minLengthSecs) {
                   outbursts.push({
                     channel: c,
-                    start: (start / decoded.sampleRate).toFixed(4),
-                    end: ((start + length) / decoded.sampleRate).toFixed(4),
-                    length: (length / decoded.sampleRate).toFixed(4)
+                    start: +(start / decoded.sampleRate).toFixed(4),
+                    end: +((start + length) / decoded.sampleRate).toFixed(4),
+                    length: +(length / decoded.sampleRate).toFixed(4)
                   });
                 }
               }
@@ -42,7 +42,7 @@
         }
       }
       outbursts.sort(function(a, b) {
-        if (+a.start > +b.start) {
+        if (a.start > b.start) {
           return 1;
         } else {
           return -1;

@@ -20,13 +20,13 @@ main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileF
               if length > decoded.sampleRate * minLengthSecs
                 outbursts.push 
                   channel: c
-                  start: (start / decoded.sampleRate).toFixed(4)
-                  end: ((start + length) / decoded.sampleRate).toFixed(4)
-                  length: (length / decoded.sampleRate).toFixed(4)
+                  start: +(start / decoded.sampleRate).toFixed(4)
+                  end: +((start + length) / decoded.sampleRate).toFixed(4)
+                  length: +(length / decoded.sampleRate).toFixed(4)
             start = i
           lastSignificant = i
     outbursts.sort (a, b) ->
-      if +a.start > +b.start then 1 else -1
+      if a.start > b.start then 1 else -1
     for outburst, i in outbursts
       outburst.index = i
       if i > 0
