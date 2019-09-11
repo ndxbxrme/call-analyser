@@ -22,7 +22,7 @@
         ref1 = decoded.channelData[c];
         for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
           sample = ref1[i];
-          if (Math.abs(sample) > 0.04) {
+          if (Math.abs(sample) > triggerValue) {
             if (i - lastSignificant > decoded.sampleRate * maxSilenceLengthSecs) {
               if (start !== -1) {
                 length = lastSignificant - start;
@@ -42,7 +42,7 @@
         }
       }
       outbursts.sort(function(a, b) {
-        if (a.start > b.start) {
+        if (+a.start > +b.start) {
           return 1;
         } else {
           return -1;

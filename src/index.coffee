@@ -13,7 +13,7 @@ main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileF
     start = -1
     for channel, c in decoded.channelData
       for sample, i in decoded.channelData[c]
-        if Math.abs(sample) > 0.04
+        if Math.abs(sample) > triggerValue
           if i - lastSignificant > decoded.sampleRate * maxSilenceLengthSecs
             if start isnt - 1
               length = lastSignificant - start
@@ -26,7 +26,7 @@ main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileF
             start = i
           lastSignificant = i
     outbursts.sort (a, b) ->
-      if a.start > b.start then 1 else -1
+      if +a.start > +b.start then 1 else -1
     for outburst, i in outbursts
       outburst.index = i
       if i > 0
