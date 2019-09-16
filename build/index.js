@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  var WavDecoder, WavEncoder, fs, main;
+  var WavDecoder, WavEncoder, fs, main, path;
 
   fs = require('fs-extra');
 
@@ -8,22 +8,25 @@
 
   WavEncoder = require('wav-encoder');
 
+  path = require('path');
+
   main = async function(filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileFolder, outputFilePrefix) {
     var buffer, c, channel, decoded, file, i, j, k, l, lastSignificant, len, len1, len2, length, outArr, outburst, outbursts, ref, ref1, sample, start;
     file = (await fs.readFile(filePath));
     decoded = (await WavDecoder.decode(file));
     outbursts = [];
     if (decoded && decoded.sampleRate) {
-      lastSignificant = -1;
-      start = -1;
       ref = decoded.channelData;
       for (c = j = 0, len = ref.length; j < len; c = ++j) {
         channel = ref[c];
+        lastSignificant = -1;
+        start = -1;
         ref1 = decoded.channelData[c];
         for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
           sample = ref1[i];
           if (Math.abs(sample) > triggerValue) {
             if (i - lastSignificant > decoded.sampleRate * maxSilenceLengthSecs) {
+              console.log(c, (i / decoded.sampleRate).toFixed(4));
               if (start !== -1) {
                 length = lastSignificant - start;
                 if (length > decoded.sampleRate * minLengthSecs) {
@@ -48,6 +51,7 @@
           return -1;
         }
       });
+      console.log(outbursts);
       for (i = l = 0, len2 = outbursts.length; l < len2; i = ++l) {
         outburst = outbursts[i];
         outburst.index = i;
@@ -62,7 +66,7 @@
             sampleRate: decoded.sampleRate,
             channelData: [outArr]
           }));
-          await fs.writeFile(path.join(outputFileFolder, outputFilePrefix + outburst.index + '_' + outburst.channel + '.wav', new Buffer(buffer)));
+          await fs.writeFile(path.join(outputFileFolder, outputFilePrefix + outburst.index + '_' + outburst.channel + '.wav'), new Buffer(buffer));
         }
       }
     }

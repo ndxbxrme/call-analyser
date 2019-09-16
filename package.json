@@ -1,10 +1,10 @@
 {
   "name": "call-analyser",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "ndx-framework web app",
   "main": "build/index.js",
   "scripts": {
-    "test": "node build/test.js"
+    "test": "node build/test/test.js"
   },
   "ndx": true,
   "loadOrder": 5,

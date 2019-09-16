@@ -6,8 +6,8 @@
     "test.coffee"
   ],
   "names": [],
-  "mappings": "AAAA;EAAA;EAEA,OAAO,CAAC,GAAR,CAAY,MAAZ;AAFA",
+  "mappings": "AAAA;EAAA;AAAA,MAAA,QAAA,EAAA;;EAEA,QAAA,GAAW,OAAA,CAAQ,UAAR;;EACX,IAAA,GAAO,MAAA,QAAA,CAAA,CAAA;AACL,QAAA;IAAA,MAAA,GAAS,CAAA,MAAM,QAAA,CACb;MAAA,YAAA,EAAc,IAAd;MACA,QAAA,EAAU,eADV;MAEA,gBAAA,EAAkB,QAFlB;MAGA,gBAAA,EAAkB;IAHlB,CADa,CAAN;WAKT,OAAO,CAAC,GAAR,CAAY,MAAZ;EANK;;EAOP,IAAA,CAAA;AAVA",
   "sourcesContent": [
-    "'use strict'\r\n\r\nconsole.log 'test'"
+    "'use strict'\r\n\r\nanalyser = require '../index'\r\nmain = ->\r\n  result = await analyser\r\n    triggerValue: 0.04\r\n    filePath: 'wavs/test.wav'\r\n    outputFileFolder: 'output' #where to save items\r\n    outputFilePrefix: 'test'\r\n  console.log result\r\nmain()"
   ]
 }
