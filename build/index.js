@@ -26,7 +26,6 @@
           sample = ref1[i];
           if (Math.abs(sample) > triggerValue) {
             if (i - lastSignificant > decoded.sampleRate * maxSilenceLengthSecs) {
-              console.log(c, (i / decoded.sampleRate).toFixed(4));
               if (start !== -1) {
                 length = lastSignificant - start;
                 if (length > decoded.sampleRate * minLengthSecs) {
@@ -51,7 +50,6 @@
           return -1;
         }
       });
-      console.log(outbursts);
       for (i = l = 0, len2 = outbursts.length; l < len2; i = ++l) {
         outburst = outbursts[i];
         outburst.index = i;

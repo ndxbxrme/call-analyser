@@ -16,7 +16,6 @@ main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileF
       for sample, i in decoded.channelData[c]
         if Math.abs(sample) > triggerValue
           if i - lastSignificant > decoded.sampleRate * maxSilenceLengthSecs
-            console.log c, (i / decoded.sampleRate).toFixed(4)
             if start isnt -1
               length = lastSignificant - start
               if length > decoded.sampleRate * minLengthSecs
@@ -29,7 +28,6 @@ main = (filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileF
           lastSignificant = i
     outbursts.sort (a, b) ->
       if a.start > b.start then 1 else -1
-    console.log outbursts
     for outburst, i in outbursts
       outburst.index = i
       if i > 0
