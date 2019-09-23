@@ -10,8 +10,8 @@
 
   path = require('path');
 
-  main = async function(filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileFolder, outputFilePrefix) {
-    var buffer, c, channel, decoded, file, i, j, k, l, lastSignificant, len, len1, len2, length, outArr, outburst, outbursts, ref, ref1, sample, start;
+  main = async function(filePath, triggerValue, minLengthSecs, maxSilenceLengthSecs, outputFileFolder, outputFilePrefix, combine) {
+    var buffer, c, channel, decoded, file, i, j, k, l, lastSignificant, len, len1, len2, len3, length, m, myitem, outArr, outburst, outbursts, outitems, ref, ref1, sample, start;
     file = (await fs.readFile(filePath));
     decoded = (await WavDecoder.decode(file));
     outbursts = [];
@@ -25,7 +25,7 @@
         for (i = k = 0, len1 = ref1.length; k < len1; i = ++k) {
           sample = ref1[i];
           if (Math.abs(sample) > triggerValue) {
-            if (i - lastSignificant > decoded.sampleRate * maxSilenceLengthSecs) {
+            if (i - lastSignificant > decoded.sampleRate * maxSilenceLengthSecs || i < decoded.sampleRate * maxSilenceLengthSecs) {
               if (start !== -1) {
                 length = lastSignificant - start;
                 if (length > decoded.sampleRate * minLengthSecs) {
@@ -50,7 +50,21 @@
           return -1;
         }
       });
-      for (i = l = 0, len2 = outbursts.length; l < len2; i = ++l) {
+      if (combine) {
+        outitems = [];
+        for (l = 0, len2 = outbursts.length; l < len2; l++) {
+          outburst = outbursts[l];
+          myitem = outitems[outitems.length - 1];
+          if (myitem && myitem.channel === outburst.channel) {
+            myitem.end = outburst.end;
+            myitem.length = +(myitem.end - myitem.start).toFixed(4);
+          } else {
+            outitems.push(outburst);
+          }
+        }
+        outbursts = outitems;
+      }
+      for (i = m = 0, len3 = outbursts.length; m < len3; i = ++m) {
         outburst = outbursts[i];
         outburst.index = i;
         if (i > 0) {
@@ -73,7 +87,7 @@
 
   //main 'wavs/1.wav', 0.04, 0.25, 0.5
   module.exports = async function(args) {
-    return (await main(args.filePath, args.triggerValue || 0.04, args.minLengthSecs || 0.25, args.maxSilenceLengthSecs || 0.5, args.outputFileFolder, args.outputFilePrefix));
+    return (await main(args.filePath, args.triggerValue || 0.04, args.minLengthSecs || 0.25, args.maxSilenceLengthSecs || 0.5, args.outputFileFolder, args.outputFilePrefix, args.combine));
   };
 
 }).call(this);

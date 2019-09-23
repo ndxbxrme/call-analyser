@@ -1,6 +1,6 @@
 {
   "name": "call-analyser",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "ndx-framework web app",
   "main": "build/index.js",
   "scripts": {
